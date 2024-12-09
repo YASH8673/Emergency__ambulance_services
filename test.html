@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Ambulance Service</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS -->
+    <style>
+        /* Inline CSS for quick styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+            color: #333;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ff4757;
+            color: #fff;
+            padding: 10px 20px;
+        }
+        header img {
+            height: 50px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #ff6b81;
+            padding: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff4757;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+        }
+        .card h2 {
+            color: #333;
+            font-size: 20px;
+            margin: 0;
+        }
+        .card p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        iframe {
+            display: block;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border: none;
+        }
+        footer {
+            background-color: #2d3436;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Ambulance Service Logo">
+        <h1>Emergency Ambulance Service</h1>
+    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <main>
+        <div class="container">
+            <h1>Welcome to Emergency Ambulance Service</h1>
+            <div class="card">
+                <h2>Quick Assistance</h2>
+                <p>Call our 24/7 helpline for immediate ambulance services: <strong>1800-000-000</strong></p>
+                <button onclick="showAlert()">Call for Help</button>
+            </div>
+            <div class="card">
+                <h2>Our Services</h2>
+                <p>We provide basic and advanced life support ambulances, critical care units, and transportation services across India.</p>
+            </div>
+            <div class="card">
+                <h2>Watch Our Video</h2>
+                <p>Learn more about our emergency services through this video:</p>
+                <iframe src="https://www.youtube.com/embed/TUTORIAL_VIDEO_ID" allowfullscreen></iframe>
+            </div>
+            <div class="card">
+                <h2>Contact Us</h2>
+                <form id="contactForm">
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name" placeholder="Enter your name"><br><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" placeholder="Enter your email"><br><br>
+                    <label for="message">Message:</label><br>
+                    <textarea id="message" name="message" placeholder="Your message" rows="4"></textarea><br><br>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2024 Emergency Ambulance Service. All rights reserved.
+    </footer>
+    <script src="script.js"></script> <!-- Include the external JavaScript file -->
+</body>
+</html>
+<div id="map" style="height: 400px; width: 100%;"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live GPS Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add map styling here */
+        #map {
+            height: 400px;
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Live GPS Tracking</h1>
+    </header>
+    <main>
+        <div id="map"></div>
+    </main>
+    <footer>
+        &copy; 2024 Emergency Ambulance Service. All rights reserved.
+    </footer>
+    <script>
+        let map, userMarker;
+
+        function initMap() {
+            const defaultLocation = { lat: 20.5937, lng: 78.9629 };
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultLocation,
+                zoom: 5,
+            });
+
+            userMarker = new google.maps.Marker({
+                position: defaultLocation,
+                map: map,
+                title: "Your Location",
+            });
+
+            trackUserLocation();
+        }
+
+        function trackUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(
+                    (position) => {
+                        const userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+
+                        userMarker.setPosition(userLocation);
+                        map.setCenter(userLocation);
+                    },
+                    (error) => {
+                        console.error("Error tracking location:", error);
+                        alert("Unable to retrieve your location. Please enable location services.");
+                    },
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+    </script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+</body>
+</html>
